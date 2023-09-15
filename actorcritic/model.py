@@ -107,7 +107,7 @@ class ActorCritic:
         self.critic_optimizer.step()
 
     def save(self, path: str):
-        torch.save(self.policy_net.state_dict(), path)
+        torch.save(self.actor.state_dict(), path)
 
     def load(self, path: str):
-        self.policy_net.load_state_dict(torch.load(path))
+        self.actor.load_state_dict(torch.load(path))

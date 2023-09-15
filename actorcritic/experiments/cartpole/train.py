@@ -15,9 +15,11 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("Device: ", device)
 
 if torch.cuda.is_available():
-    num_episodes = 10000
+    num_episodes = 5000
 else:
     num_episodes = 500
+
+converged_threshold = 495
 
 episode_durations = []
 episode_rewards = []
@@ -73,7 +75,7 @@ def make_env():
 
 def is_converged():
     if len(episode_rewards) >= 100:
-        return np.mean(episode_rewards[-100:]) >= 480
+        return np.mean(episode_rewards[-100:]) >= converged_threshold
     return False
 
 
@@ -85,7 +87,7 @@ if __name__ == "__main__":
     action_dim = env.action_space.n
 
     actor_hidden_dim = 128
-    actor_lr = 1e-3
+    actor_lr = 1e-4
 
     critic_hidden_dim = 64
     critic_lr = 1e-3
